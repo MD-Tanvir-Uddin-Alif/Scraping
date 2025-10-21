@@ -3,7 +3,7 @@ import requests
 
 base_url = "https://webscraper.io/test-sites/e-commerce/static"
 
-category = input("Enter category (e.g., computers, phones) [Default: computers]: ").strip().lower()
+category = input("Enter category (e.g., computers, phones): ").strip().lower()
 if not category:
     category = "computers"
 
@@ -14,13 +14,7 @@ if subcategory:
 else:
     url = f"{base_url}/{category}" if category else base_url
 
-print("\nFinal scraping URL:", url)
-
-
-
-
-
-html_template = requests.get(f'{base_url}/{category}/{subcategory}').text
+html_template = requests.get(url).text 
 
 soup = BeautifulSoup(html_template, 'lxml')
 
