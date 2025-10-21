@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup
 import requests
-
+import streamlit as st
 
 html_template = requests.get('https://webscraper.io/test-sites/e-commerce/allinone').text
 
