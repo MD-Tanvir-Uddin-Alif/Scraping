@@ -2,8 +2,10 @@ from bs4 import BeautifulSoup
 import streamlit as st
 import requests
 import math
+import csv
 
 st.title("Hockey Teams")
+
 
 pages = list(range(1, 26))
 all_teams = []
@@ -45,6 +47,16 @@ for page_num in pages:
             "gf": team_gf,
             "diff": team_diff
         })
+
+
+csv_file = "Hockey_Team.csv"
+
+with open(csv_file, mode="w", newline='', encoding="utf-8") as file:
+    writer = csv.DictWriter(file, fieldnames=["name", "year", "wins", "losses", "ot_losses", "pct", "gf","diff"])
+    writer.writeheader()
+    
+    for team in all_teams:
+        writer.writerow(team)
 
 team_names = ["All Teams"] + sorted(list({team['name'] for team in all_teams}))
 selected_team = st.selectbox("Select a team:", team_names)

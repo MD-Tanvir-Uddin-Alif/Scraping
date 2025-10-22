@@ -1,7 +1,10 @@
 from bs4 import BeautifulSoup
 import streamlit as st
 import requests
+import csv
 
+
+Country_details = []
 
 st.title("Countries of the World")
 url = requests.get('https://www.scrapethissite.com/pages/simple/').text
@@ -22,7 +25,22 @@ for plist, i in zip(base_list, range(1, len(base_list))):
     st.info(city_name)
     st.info(country_population)
     st.info(country_area)
+    
+    Country_details.append({
+        "Country": country_name,
+        "Capital": city_name,
+        "Population": country_population,
+        "Area": country_area
+    })
 
+csv_file = "Country_info.csv"
+
+with open(csv_file, mode='w', newline='', encoding="utf-8") as file:
+    writer = csv.DictWriter(file, fieldnames=["Country", "Capital", "Population","Area"])
+    writer.writeheader()
+    
+    for country in Country_details:
+        writer.writerow(country)
 
 
 
